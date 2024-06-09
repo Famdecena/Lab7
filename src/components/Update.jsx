@@ -1,4 +1,4 @@
-import  { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types"; // Import PropTypes
 import { Modal, Form, Input, Button, message } from "antd";
 import axios from "axios";
@@ -11,7 +11,7 @@ const Update = ({ record, onCancel, onUpdate }) => {
   useEffect(() => {
     // Fetch existing names when component mounts
     axios
-      .get("https://starlit-choux-d84394.netlify.app/.netlify/functions/api/")
+      .get("https://ornate-torte-332162.netlify.app/.netlify/functions/api")
       .then((res) => {
         const names = res.data.map((item) => item.name);
         setExistingNames(names);
@@ -27,7 +27,7 @@ const Update = ({ record, onCancel, onUpdate }) => {
   };
 
   const onFinish = async (values) => {
-    const { name} = values;
+    const { name } = values;
 
     if (existingNames.includes(name) && name !== record.name) {
       message.error("Name already exists. Please enter a different name.");
@@ -35,14 +35,13 @@ const Update = ({ record, onCancel, onUpdate }) => {
     }
 
     if (name.length < 3) {
-      message.error('Please enter at least three characters for the name.');
+      message.error("Please enter at least three characters for the name.");
       return;
     }
 
-
     try {
       await axios.put(
-        `https://starlit-choux-d84394.netlify.app/.netlify/functions/api/${record._id}`,
+        `https://ornate-torte-332162.netlify.app/.netlify/functions/api/${record._id}`,
         values
       );
       message.success("Data updated successfully");
@@ -68,7 +67,7 @@ const Update = ({ record, onCancel, onUpdate }) => {
           form={form}
           onFinish={onFinish}
           layout="vertical"
-          initialValues={{ name: record.name, age: record.age }}
+          initialValues={{ name: record.name, age: record.age, contact: record.contact, address: record.address }}
         >
           <Form.Item
             name="name"
@@ -78,22 +77,38 @@ const Update = ({ record, onCancel, onUpdate }) => {
             <Input />
           </Form.Item>
           <Form.Item
-          name="age"
-          label="Age"
-          rules={[
-            { required: true, message: "Please input the age!" },
-            () => ({
-              validator(_, value) {
-                if (!value || !isNaN(Number(value))) {
-                  return Promise.resolve();
-                }
-                return Promise.reject(new Error("Please enter a valid number for the age!"));
-              },
-            }),
-          ]}
-        >
-          <Input type="number" />
-        </Form.Item>
+            name="age"
+            label="Age"
+            rules={[
+              { required: true, message: "Please input the age!" },
+              () => ({
+                validator(_, value) {
+                  if (!value || !isNaN(Number(value))) {
+                    return Promise.resolve();
+                  }
+                  return Promise.reject(
+                    new Error("Please enter a valid number for the age!")
+                  );
+                },
+              }),
+            ]}
+          >
+            <Input type="number" />
+          </Form.Item>
+          <Form.Item
+            name="contact"
+            label="Contact Number"
+            rules={[{ required: true, message: "Please enter contact number" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="Address"
+            rules={[{ required: true, message: "Please enter address" }]}
+          >
+            <Input />
+          </Form.Item>
 
           <Form.Item>
             <Button type="primary" htmlType="submit">
@@ -110,7 +125,7 @@ const Update = ({ record, onCancel, onUpdate }) => {
 Update.propTypes = {
   record: PropTypes.object.isRequired,
   onCancel: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired
+  onUpdate: PropTypes.func.isRequired,
 };
 
 export default Update;

@@ -12,7 +12,7 @@ const DataForm = () => {
 
   useEffect(() => {
     axios
-      .get("https://starlit-choux-d84394.netlify.app/.netlify/functions/api/")
+      .get("https://ornate-torte-332162.netlify.app/.netlify/functions/api/")
       .then((res) => {
         setData(res.data);
       })
@@ -23,7 +23,7 @@ const DataForm = () => {
 
   function handleDelete(id) {
     axios
-      .delete(`https://starlit-choux-d84394.netlify.app/.netlify/functions/api/${id}`)
+      .delete(`https://ornate-torte-332162.netlify.app/.netlify/functions/api/${id}`)
       .then(() => {
         setData(data.filter((item) => item._id !== id));
         message.success('Data deleted successfully');
@@ -53,7 +53,7 @@ const DataForm = () => {
   
       // Additionally, update the state immediately after adding to reflect changes in the table
       axios
-        .get("https://starlit-choux-d84394.netlify.app/.netlify/functions/api/")
+        .get("https://ornate-torte-332162.netlify.app/.netlify/functions/api/")
         .then((res) => {
           setData(res.data);
         })
@@ -70,13 +70,25 @@ const DataForm = () => {
       title: 'Name',
       dataIndex: 'name',
       key: 'name',
-      width: '50%',
+      width: '25%',
     },
     {
       title: 'Age',
       dataIndex: 'age',
       key: 'age',
-      width: '30%'
+      width: '10%'
+    },
+    {
+      title: 'Contact Number',
+      dataIndex: 'contact',
+      key: 'age',
+      width: '20%'
+    },
+    {
+      title: 'Address',
+      dataIndex: 'address',
+      key: 'age',
+      width: '25%'
     },
     {
       title: (

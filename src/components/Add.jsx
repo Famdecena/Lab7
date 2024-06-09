@@ -11,7 +11,7 @@ const Add = ({ onAdd }) => {
   useEffect(() => {
     // Fetch existing names when component mounts
     axios
-      .get("https://starlit-choux-d84394.netlify.app/.netlify/functions/api/")
+      .get("https://ornate-torte-332162.netlify.app/.netlify/functions/api/")
       .then((res) => {
         const names = res.data.map((item) => item.name);
         setExistingNames(names);
@@ -32,26 +32,28 @@ const Add = ({ onAdd }) => {
   const onFinish = (values) => {
     const { name, age } = values;
     if (existingNames.includes(name)) {
-      message.error('Name already exists. Please enter a different name.');
+      message.error("Name already exists. Please enter a different name.");
       return;
     }
 
     if (name.length < 3) {
-      message.error('Please enter at least three characters for the name.');
+      message.error("Please enter at least three characters for the name.");
       return;
     }
 
     if (isNaN(age) || age === "") {
-      message.error('Please enter a valid number for the age.');
+      message.error("Please enter a valid number for the age.");
       return;
     }
 
-
     axios
-      .post("https://starlit-choux-d84394.netlify.app/.netlify/functions/api/", values)
+      .post(
+        "https://ornate-torte-332162.netlify.app/.netlify/functions/api/",
+        values
+      )
       .then((res) => {
         onAdd(res.data, () => {
-          message.success('Data added successfully');
+          message.success("Data added successfully");
           form.resetFields();
           setVisible(false);
         });
@@ -73,10 +75,32 @@ const Add = ({ onAdd }) => {
         footer={null}
       >
         <Form form={form} onFinish={onFinish} layout="vertical">
-          <Form.Item name="name" label="Name" rules={[{ required: true, message: 'Please enter name' }]}>
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[{ required: true, message: "Please enter name" }]}
+          >
             <Input />
           </Form.Item>
-          <Form.Item name="age" label="Age" rules={[{ required: true, message: 'Please enter age' }]}>
+          <Form.Item
+            name="age"
+            label="Age"
+            rules={[{ required: true, message: "Please enter age" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="contact"
+            label="Contact Number"
+            rules={[{ required: true, message: "Please enter contact number" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="Address"
+            rules={[{ required: true, message: "Please enter address" }]}
+          >
             <Input />
           </Form.Item>
           <Form.Item>
